@@ -52,7 +52,7 @@ body {
       justify-content: flex-start;
       flex-direction: row;
       align-items: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       margin-bottom: 5px;
   }
 
@@ -60,6 +60,8 @@ body {
       /* border: 1px solid black; */
       display: flex;
       align-items: center;
+      
+
       margin: 0;
       padding: 0;
   }
@@ -71,11 +73,12 @@ body {
       /* border: 1px solid black; */
       margin-right: 10px; /* Apply margin here */
       padding: 0;
+      position: relative;
   }
 
   .icon:hover {
       filter: invert(75%); 
-      cursor: pointer;
+      /* cursor: pointer; */
   }
 
   ul{
@@ -191,7 +194,14 @@ body {
     color: #203864;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 990px) {
+    .sidebar-icon-group{
+      padding:0px;
+    }
+  }
+
+
+  @media (max-width: 800px) {
     .sidebar {
         width: 40px;
         min-width: 40px;
