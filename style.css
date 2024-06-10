@@ -288,7 +288,7 @@ ul {
     flex-direction: column;
     align-items: stretch;
     max-width: 1028px;
-    gap:10px;
+    gap:0px;
   }
 
   .experience-date {
