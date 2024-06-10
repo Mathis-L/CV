@@ -1,6 +1,13 @@
+@font-face {
+  font-family: 'Avenir Light';
+  src: url('res/Avenir-Light.ttf') format('truetype');
+  /* font-weight: 10;  */
+  font-style: normal;
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Avenir Light', sans-serif;
     display: flex;
     font-size: smaller;
 }
@@ -10,7 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #203864;
+  background-image: radial-gradient(circle, #203864, #263e6a, #2c4471, #324b77, #38517e);
   width: 30%; /* Fixation de la largeur de la barre latérale */
   min-height: 100vh;
   max-width: 250px;
@@ -42,6 +49,7 @@ body {
 /* Styles du texte de la barre latérale */
 .sidebar-text {
   max-width: 220px;
+  text-align: justify;
 }
 
 /* Styles du groupe d'icônes de la barre latérale */
@@ -80,7 +88,7 @@ body {
 
 /* Liste non ordonnée */
 ul {
-  margin: 0 15% 0 20px;
+  margin: 0 15px 0 20px;
   padding: 0;
 }
 
@@ -91,6 +99,7 @@ ul {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  max-width: 1000px;
 }
 
 /* En-tête */
@@ -136,7 +145,8 @@ ul {
 }
 .block-experience ul {
   list-style-type: circle;
-  margin: 0 20px 0 20px;
+  margin: 0 50px 0 20px;
+  text-align: justify;
 }
 .block-experience li::marker{
   color: #203864;
@@ -171,12 +181,13 @@ ul {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  max-width: 1000px;
+  max-width: 1200px;
 }
 .competence{
   margin:0px ;
   padding: 0px 7%;
   border-right: 1px solid #203864;
+  white-space:nowrap;
 }
 .competence:last-child {
   border-right: none; /* Remove the border from the last item */
@@ -239,6 +250,8 @@ ul {
       margin: 0 2px 0 0;
       width: 90%;
       justify-content: center;
+      position:sticky;
+      top:0;
   }
 
   .sidebar-block:first-of-type,
@@ -257,9 +270,11 @@ ul {
   .sidebar-icon-group {
     padding: 0;
     margin: 0;
+    
   }
   .icon{
     margin:0;
+    
   }
 
   .sidebar-icon-text{
@@ -273,7 +288,7 @@ ul {
     flex-direction: column;
     align-items: stretch;
     max-width: 1028px;
-    gap:10px;
+    gap:0px;
   }
 
   .experience-date {
