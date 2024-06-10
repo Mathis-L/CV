@@ -18,7 +18,7 @@ body {
 
   .sidebar-image {
       width: 80%; /* Ajuste la largeur de l'image selon vos besoins */
-      max-width: 200px; /*Ajuste la largeur maximale selon vos besoins */
+      max-width: 300px; /*Ajuste la largeur maximale selon vos besoins */
       height: auto; /* Maintient les proportions de l'image */
       margin: 10% 10% 10% 10%;
       border-radius: 5%;
