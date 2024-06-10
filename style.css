@@ -17,7 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #203864;
+  background-image: radial-gradient(circle, #203864, #263e6a, #2c4471, #324b77, #38517e);
   width: 30%; /* Fixation de la largeur de la barre latérale */
   min-height: 100vh;
   max-width: 250px;
