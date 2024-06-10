@@ -29,7 +29,8 @@ body {
   .sidebar-block{
       color: white;
       /* border: 1px solid black; */
-      margin-left: 10px;
+      margin-left: 5px;
+      margin-right: 10px;
       width: 90%;
   }
 
@@ -39,7 +40,7 @@ body {
   }
 
   .sidebar-text{
-      padding-right: 7%;
+      max-width: 220px;
   }
 
   .sidebar-icon-group{
@@ -118,7 +119,7 @@ body {
     margin:0px;
     padding-left: 10px;
     padding-bottom: 5px;
-    margin: 10px 0;
+    margin: 15px 0;
     /* border: 1px solid black; */
   }
 
@@ -138,6 +139,9 @@ body {
   }
   .block-experience li::marker{
     color: #203864;
+  }
+  .block-experience:last-child {
+    margin:0 0 0 10px;  /*reduce margin bottom*/
   }
   .experience-date{
     margin: 1px 0 0 0;
