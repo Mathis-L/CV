@@ -20,7 +20,11 @@ body {
   background-image: radial-gradient(circle, #203864, #263e6a, #2c4471, #324b77, #38517e);
   width: 30%; /* Fixation de la largeur de la barre latérale */
   min-height: 100vh;
-  max-width: 250px;
+  max-width: 300px;
+  padding-top: 10px;
+  gap:20px;
+  padding-right: 20px;
+  padding-left: 15px;
 }
 
 /* Styles de l'image de la barre latérale */
@@ -44,12 +48,12 @@ body {
 .sidebar-title {
   border-bottom: 1px solid white;
   padding-bottom: 5px;
+  margin-top:0px;
 }
 
 /* Styles du texte de la barre latérale */
 .sidebar-text {
   max-width: 220px;
-  text-align: justify;
 }
 
 /* Styles du groupe d'icônes de la barre latérale */
@@ -106,6 +110,7 @@ ul {
 .header {
   margin-top: 20px;
   margin-left: 40px;
+  align-self: center;
 }
 /* Titre principal */
 .header-h1 {
@@ -146,13 +151,23 @@ ul {
 .block-experience ul {
   list-style-type: circle;
   margin: 0 50px 0 20px;
-  text-align: justify;
+  /* text-align: justify; */
 }
 .block-experience li::marker{
   color: #203864;
 }
 .block-experience:last-child {
   margin:0 0 0 10px;  /*reduce margin bottom*/
+}
+
+.experience-left {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+.experience-img{
+  margin: 5px;
 }
 .experience-date{
   margin: 1px 0 0 0;
@@ -220,22 +235,25 @@ ul {
     margin-top: 20px;
     margin-left: auto; /* Ajoute une marge à gauche pour centrer seulement le contenu de la classe .header */
     margin-right: auto; /* Ajoute une marge à droite pour centrer seulement le contenu de la classe .header */
+    align-self: auto;
   }
   
   .header-h1 {
     color: #203864;
     font-size: xx-large;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
   }
   
   .header-h2 {
     margin-left: 10px;
     margin-top: 0px;
     font-size: x-large;
+    margin-bottom:0px;
   }
   .sidebar {
       width: 40px;
       min-width: 40px;
+      padding:5px;
   }
 
   .sidebar-image {
@@ -289,6 +307,13 @@ ul {
     align-items: stretch;
     max-width: 1028px;
     gap:0px;
+  }
+
+  .experience-left {
+    display: block;
+  }
+  .experience-img{
+    display: none;
   }
 
   .experience-date {
