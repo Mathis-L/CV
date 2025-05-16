@@ -1,15 +1,50 @@
 @font-face {
   font-family: 'Avenir Light';
   src: url('res/Avenir-Light.ttf') format('truetype');
-  /* font-weight: 10;  */
   font-style: normal;
 }
 
 body {
     margin: 0;
     font-family: 'Avenir Light', sans-serif;
-    display: flex;
-    font-size: smaller;
+    /* display: flex; /* We'll control display on page-container */
+    font-size: 10pt; /* Base font size for screen, adjust as needed */
+    background-color: #f0f0f0; /* Light grey background for contrast with page */
+    color: #333;
+}
+
+.download-button-container {
+  text-align: center;
+  padding: 15px;
+  background-color: #203864;
+}
+
+#download-pdf-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: white;
+  background-color: #38517e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+#download-pdf-button:hover {
+  background-color: #2c4471;
+}
+
+
+/* A4 Page Container for screen preview */
+.page-container {
+  width: 210mm; /* A4 width */
+  /* min-height: 297mm; /* A4 height - use min-height to allow content to flow if it's too long on screen */
+  height: 297mm; /* Fixed height for the strict one-page PDF goal */
+  overflow: hidden; /* Important for PDF generation to not show scrollbars if content overflos */
+  margin: 20px auto; /* Center the page on screen */
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  display: flex; /* This was on body before */
+  box-sizing: border-box;
 }
   
 /* Styles de la barre latérale */
@@ -18,83 +53,102 @@ body {
   flex-direction: column;
   align-items: center;
   background-image: radial-gradient(circle, #203864, #263e6a, #2c4471, #324b77, #38517e);
-  width: 30%; /* Fixation de la largeur de la barre latérale */
-  min-height: 100vh;
-  max-width: 300px;
-  padding-top: 10px;
-  gap:20px;
-  padding-right: 20px;
-  padding-left: 15px;
+  /* width: 30%; Use fixed width for A4 */
+  width: 90mm; /* Approx 30% of 210mm, adjust as needed */
+  height: 100%; /* Fill the page container height */
+  /* min-height: 100vh; /* Not needed with fixed page height */
+  /* max-width: 300px; /* Not needed with fixed mm width */
+  padding-top: 8mm;
+  gap: 10mm; /* Reduced gap */
+  padding-right: 5mm;
+  padding-left: 5mm;
+  box-sizing: border-box;
+  color: white;
 }
 
 /* Styles de l'image de la barre latérale */
 .sidebar-image {
   width: 60%; 
-  max-width: 300px; 
+  max-width: 40mm; /* Control max size */
   height: auto; 
-  margin: 10px;
   border-radius: 5%;
 }
 
 /* Styles des blocs de la barre latérale */
 .sidebar-block {
-  color: white;
-  margin-left: 5px;
-  margin-right: 10px;
-  width: 90%;
+  /* color: white; /* Moved to .sidebar */
+  margin-left: 0; /* Adjusted */
+  margin-right: 0; /* Adjusted */
+  width: 100%; /* Fill sidebar width */
 }
 
 /* Styles du titre de la barre latérale */
 .sidebar-title {
   border-bottom: 1px solid white;
-  padding-bottom: 5px;
+  padding-bottom: 2mm; /* Adjusted padding */
   margin-top:0px;
+  font-size: 1.1em; /* Relative to sidebar font size */
 }
 
 /* Styles du texte de la barre latérale */
 .sidebar-text {
-  max-width: 220px;
+  /* max-width: 220px; /* Let it fill available space in sidebar */
+  font-size: 0.85em; /* Slightly smaller for A4 */
+  line-height: 1.4;
+}
+.sidebar-text ul { /* Ensure ul inside sidebar-text also gets smaller font */
+    font-size: 1em; /* Inherit from sidebar-text */
 }
 
-/* Styles du groupe d'icônes de la barre latérale */
-.sidebar-icon-group {
+.link-group {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: nowrap;
-  margin: 0;
-  padding-left: 5%;
-  padding-right: 5%;
-  margin-bottom: 5px;
+  flex-direction: column;
+  gap: 3mm; /* Espace entre les liens - adjusted */
 }
 
-/* Styles du texte des icônes de la barre latérale */
+.sidebar-icon-link {
+  display: flex; 
+  align-items: center;
+  text-decoration: none; 
+  color: inherit; 
+  padding-left: 0mm; 
+  padding-right: 2mm;
+}
+
 .sidebar-icon-text {
   display: flex;
   align-items: center;
   margin: 0;
   padding: 0;
+  font-size: 0.85em; /* Slightly smaller for A4 */
+  word-break: break-all; /* Break long emails/links */
 }
   
-/* Icône de la barre latérale */
 .icon {
   filter: invert(100%);
-  width: 25px;
+  width: 5mm; /* Adjusted size */
   height: auto; 
-  margin-right: 10px;
+  margin-right: 3mm; /* Adjusted margin */
   padding: 0;
+  flex-shrink: 0; /* Prevent icon from shrinking */
 }
 
-/* Icône de la barre latérale au survol */
-.icon:hover {
-  filter: invert(75%); 
+.sidebar-icon-link:hover .icon {
+  filter: invert(75%);
+}
+.sidebar-icon-link:hover .sidebar-icon-text {
+   color: #cccccc; 
 }
 
-/* Liste non ordonnée */
 ul {
-  margin: 0 15px 0 20px;
+  margin: 0 0 0 5mm; /* Adjusted margin */
   padding: 0;
+  list-style-position: outside;
 }
+.sidebar ul { /* Specific for sidebar lists */
+  margin-left: 6mm;
+}
+
 
 /* Contenu principal */
 .content {
@@ -103,143 +157,365 @@ ul {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  max-width: 1000px;
+  gap:5mm;
+  box-sizing: border-box;
+  height: 100%; /* Fill the page container height */
+  overflow-y: auto; /* Allow scrolling for screen if content is too long for fixed height */
 }
 
 /* En-tête */
 .header {
-  margin-top: 20px;
-  margin-left: 40px;
-  align-self: center;
+  margin-top: 0; /* Adjusted */
+  align-self: center; 
 }
-/* Titre principal */
 .header-h1 {
   color: #203864;
-  font-size: xx-large;
-  margin-bottom: 10px;
+  font-size: 18pt; /* Adjusted size */
+  margin-bottom: 1mm; /* Adjusted margin */
+  text-align: center;
 }
-/* Sous-titre */
 .header-h2 {
-  margin-left: 10px;
+  /* margin-left: 10px; */
   margin-top: 0px;
-  font-size: x-large;
+  font-size: 14pt; /* Adjusted size */
+  text-align: center;
+  color: #333; /* Darker than default for better contrast */
 }
   
 .content-block{
   width:100%;
-  margin-bottom: 10px;
+  margin-bottom: 4mm; /* Adjusted margin */
+}
+.content-block:last-child {
+    margin-bottom: 0; /* No margin for the last block */
 }
 
 .block-title{
   border-bottom: 1px solid #203864;
   color: #203864;
-  margin:0px;
-  padding-left: 10px;
-  padding-bottom: 5px;
-  margin: 15px 0;
+  padding-left: 2mm; /* No specific padding, handled by .content padding */
+  padding-bottom: 2mm; /* Adjusted padding */
+  margin: 0 0 3mm 0; /* Adjusted margin */
+  font-size: 1.2em; /* Relative to content font size */
 }
 
 .block-experience{
-  margin:0 0 25px 10px; 
+  margin:0 2.5mm 5mm; 
   padding:0;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  max-width: 1028px;
-  gap:10px;
+  /* max-width: 1028px; */
+  gap:3mm; /* Adjusted gap */
 }
 .block-experience ul {
   list-style-type: circle;
-  margin: 0 50px 0 20px;
-  /* text-align: justify; */
+  margin: 1mm 0 0 5mm; /* Adjusted margin */
+  font-size: 0.9em; /* Slightly smaller for lists */
+  line-height: 1.4;
 }
 .block-experience li::marker{
   color: #203864;
 }
 .block-experience:last-child {
-  margin:0 0 0 10px;  /*reduce margin bottom*/
+  margin-bottom:0; 
 }
 
 .experience-left {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 2mm; /* Adjusted gap */
   align-items: center;
+  flex-shrink: 0; /* Prevent shrinking */
+  width: 16mm; /* Give it a fixed width to align text */
 }
 .experience-img{
-  margin: 5px;
+  margin: 2mm; 
+  max-width: 12mm; 
+  height: auto;
 }
 .experience-date{
-  margin: 1px 0 0 0;
+  margin: 0;
   padding: 0;
-  max-width: 75px;
+  width: 100%; 
   font-weight: bold;
   color: #203864;
+  font-size: 0.85em; 
 }
 .experience-titre{
   margin: 0;
   padding: 0;
+  font-size: 1em;
+  font-weight: bold; /* Make titles stand out a bit more */
 }
 .experience-lieu{
-  margin: 0 0 5px 2px;;
+  margin: 0 0 2mm 1mm;
   padding: 0;
-  font-size: x-small;
+  font-size: 0.8em; /* Slightly smaller */
   font-style: italic;
 }
 
 .formation-lieu{
-  margin: 5px 0 0 5px;
+  margin: 1mm 0 0 1mm; /* Adjusted margin */
   padding: 0;
+  font-size: 0.9em; /* Consistent with experience lists */
 }
+
 
 .block-competences{
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  max-width: 1200px;
+  justify-content: space-between;
+  gap: 3mm; 
+  margin-left:2.5mm;
 }
 .competence{
   margin:0px ;
-  padding: 0px 7%;
-  border-right: 1px solid #203864;
+  padding: 0; /* No specific padding */
+  /* border-right: 1px solid #203864; /* Will be removed for last-child */
   white-space:nowrap;
+  flex: 1; /* Allow them to share space */
 }
-.competence:last-child {
-  border-right: none; /* Remove the border from the last item */
+.competence:not(:last-child) {
+  padding-right: 3mm; /* Space before border */
+  border-right: 1px solid #203864;
 }
 
+
 .competence h4{
-  margin: 10px;
+  margin: 0 0 2mm 0; /* Adjusted margin */
   text-align: center;
+  font-size: 1em; /* Consistent title size */
+  color: #203864;
+}
+.competence ul {
+  font-size: 0.9em;
+  line-height: 1.4;
+  margin-left: 5mm;
 }
 .competence li::marker{
   color: #203864;
 }
 
-@media (max-width: 990px) { /* Correction pour l'icône de mail et le texte */
-  .sidebar-icon-group{
-    padding:0px;
+@media print {
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 9pt; 
+    background-color: white !important; /* NOUVEAU: S'assurer que le fond est blanc */
+    color: black !important; /* NOUVEAU: S'assurer que le texte est noir */
+    -webkit-print-color-adjust: exact !important; 
+    print-color-adjust: exact !important; 
+    line-height: 1.15; /* AJUSTÉ: Légèrement réduit pour gagner de la place partout */
+  }
+
+  .download-button-container {
+    display: none !important; 
+  }
+
+  .page-container {
+    width: 210mm; /* NOUVEAU: Forcer la largeur A4 exacte */
+    height: 297mm; /* NOUVEAU: Forcer la hauteur A4 exacte */
+    margin: 0 !important; 
+    padding: 0 !important; /* NOUVEAU: Pas de padding sur le conteneur racine pour PDF */
+    box-shadow: none !important; /* NOUVEAU */
+    overflow: hidden !important; /* NOUVEAU et CRUCIAL */
+    display: flex !important; /* NOUVEAU: S'assurer que display flex est appliqué */
+  }
+
+  .sidebar {
+    width: 63mm; /* AJUSTÉ: Un peu plus que 60mm pour donner de l'air, mais moins que 90mm */
+    height: 100%; /* NOUVEAU: Doit remplir page-container */
+    padding: 6mm 5mm 5mm 5mm; /* AJUSTÉ: Padding interne pour la marge visuelle. Top un peu plus grand. */
+    gap: 5px; /* AJUSTÉ: Réduit significativement */
+    box-sizing: border-box; /* NOUVEAU: S'assurer que padding est inclus dans width/height */
+    display: flex; /* NOUVEAU: S'assurer que c'est flex pour que gap fonctionne */
+    flex-direction: column; /* NOUVEAU */
+    align-items: center; /* NOUVEAU */
+  }
+  .sidebar-image {
+    max-width: 35mm;
+    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
+    margin-bottom: 2mm; /* AJUSTÉ */
+    border-radius: 5%; /* NOUVEAU: Garder un peu de style */
+  }
+  .sidebar-block {
+      width: 100%; /* NOUVEAU */
+      margin-bottom: 2mm; /* NOUVEAU: Un peu d'espace entre blocs sidebar si nécessaire, mais gap devrait le gérer */
+  }
+  .sidebar-block:last-child {
+      margin-bottom: 0; /* NOUVEAU */
+  }
+  .sidebar-title {
+    font-size: 1.0em; /* AJUSTÉ */
+    padding-bottom: 1mm; /* AJUSTÉ */
+    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
+    margin-bottom: 1.5mm; /* NOUVEAU */
+  }
+  .sidebar-text {
+    font-size: 7.8pt; /* AJUSTÉ: encore un peu plus petit */
+    line-height: 1.25; /* AJUSTÉ */
+    margin-top: 0;
+    margin-bottom: 1mm; 
+  }
+   .sidebar-text ul {
+    font-size: 1em; 
+    margin-top: 0.5mm;
+    margin-left: 4mm; /* AJUSTÉ */
+    padding-left: 0; /* NOUVEAU */
+  }
+  .sidebar-icon-text {
+    font-size: 7.8pt; /* AJUSTÉ */
+  }
+  .link-group {
+    gap: 1.5mm; /* AJUSTÉ */
+  }
+  .icon {
+    width: 3.5mm; /* AJUSTÉ */
+    margin-right: 1.5mm; /* AJUSTÉ */
+  }
+
+  .content {
+    flex-grow: 1; /* NOUVEAU */
+    height: 100%; /* NOUVEAU: Doit remplir page-container */
+    padding: 6mm 7mm 5mm 7mm; /* AJUSTÉ: Padding interne pour marges. Top un peu plus grand. */
+    overflow: hidden; /* NOUVEAU et CRUCIAL pour le contenu interne */
+    gap: 2mm; /* AJUSTÉ: Réduire le gap global */
+    box-sizing: border-box; /* NOUVEAU */
+    display: flex; /* NOUVEAU */
+    flex-direction: column; /* NOUVEAU */
+  }
+
+  .header {
+    margin-top: 0 !important; 
+    padding-top: 0 !important;
+    margin-bottom: 1.5mm; /* AJUSTÉ: Moins d'espace sous l'en-tête global */
+    align-self: center; /* NOUVEAU */
+  }
+  .header-h1 {
+    font-size: 15pt; /* AJUSTÉ */
+    margin-top: 0 !important; 
+    margin-bottom: 0mm !important; /* AJUSTÉ */
+  }
+  .header-h2 {
+    font-size: 12pt; /* AJUSTÉ */
+    margin-top: 0.5mm !important; /* AJUSTÉ: Un peu d'espace après H1 */
+    margin-bottom: 0 !important;
+  }
+  
+  .content-block {
+    width: 100%; /* NOUVEAU */
+    margin-bottom: 2mm; /* AJUSTÉ */
+  }
+  .content-block:last-child {
+      margin-bottom: 0; /* NOUVEAU: Pas de marge pour le dernier bloc de contenu */
+  }
+
+  .block-title {
+    font-size: 1.05em; /* AJUSTÉ */
+    padding-bottom: 0.8mm; /* AJUSTÉ */
+    margin-bottom: 1.2mm; /* AJUSTÉ */
+    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
+  }
+
+  .block-experience {
+    margin-bottom: 2mm; /* AJUSTÉ */
+    gap: 1.5mm; 
+    margin-left: 0; /* NOUVEAU */
+    margin-right: 0; /* NOUVEAU */
+  }
+  .block-experience:last-child {
+      margin-bottom: 0; /* NOUVEAU */
+  }
+  .experience-left {
+      width: 15mm; /* AJUSTÉ */
+      gap: 1.5mm; /* AJUSTÉ */
+  }
+  .experience-img {
+    max-width: 11mm; /* AJUSTÉ */
+    margin: 1mm 0; /* AJUSTÉ */
+  }
+  .block-experience ul {
+    font-size: 0.82em; /* AJUSTÉ */
+    line-height: 1.2; /* AJUSTÉ */
+    margin-top: 0.5mm; /* AJUSTÉ */
+    margin-bottom: 0; /* NOUVEAU */
+    padding-left: 3.5mm; /* AJUSTÉ */
+  }
+  .experience-date {
+    font-size: 0.78em; /* AJUSTÉ */
+  }
+  .experience-titre {
+    font-size: 0.92em; /* AJUSTÉ */
+    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
+    margin-bottom: 0.3mm; /* AJUSTÉ */
+  }
+  .experience-lieu {
+    font-size: 0.72em; /* AJUSTÉ */
+    margin-bottom: 0.5mm; /* AJUSTÉ */
+    margin-top: 0;
+  }
+  .formation-lieu {
+    font-size: 0.82em; /* AJUSTÉ */
+    margin-top: 0.3mm; /* AJUSTÉ */
+  }
+
+  .block-competences {
+    margin-top: 0.5mm; /* AJUSTÉ */
+    margin-left: 0; /* NOUVEAU */
+    gap: 2mm; /* AJUSTÉ */
+  }
+  .competence h4 {
+    font-size: 0.92em; /* AJUSTÉ */
+    margin-bottom: 0.8mm; /* AJUSTÉ */
+    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
+  }
+  .competence ul {
+    font-size: 0.82em; /* AJUSTÉ */
+    line-height: 1.2; /* AJUSTÉ */
+    margin-top: 0;
+    padding-left: 3.5mm; /* AJUSTÉ */
+  }
+
+  /* Try to prevent page breaks (gardé de votre code, c'est bien) */
+  .sidebar-block, .content-block, .block-experience, .competence {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, p, li { 
+    page-break-after: avoid;
+    page-break-before: avoid; 
+  }
+  ul { 
+    page-break-inside: avoid;
   }
 }
 
-
+/* Responsive styles for smaller screens */
 @media (max-width: 800px) {
+  .page-container {
+    width: 100%;
+    min-height: 0; /* Allow it to be as tall as content */
+    height: auto;
+    margin: 0;
+    flex-direction: column; /* Stack sidebar and content */
+  }
+
   .content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    overflow-y: visible; /* Let content determine height */
   }
   
   .header {
     margin-top: 20px;
-    margin-left: auto; /* Ajoute une marge à gauche pour centrer seulement le contenu de la classe .header */
-    margin-right: auto; /* Ajoute une marge à droite pour centrer seulement le contenu de la classe .header */
+    margin-left: auto; 
+    margin-right: auto; 
     align-self: auto;
   }
   
   .header-h1 {
-    color: #203864;
     font-size: xx-large;
     margin-bottom: 0px;
   }
@@ -251,78 +527,93 @@ ul {
     margin-bottom:0px;
   }
   .sidebar {
-      width: 40px;
-      min-width: 40px;
-      padding:5px;
+      width: 100%; /* Full width when stacked */
+      min-width: 0;
+      height: auto; /* Auto height */
+      padding:15px;
+      /* The sticky behavior for contact might be tricky in this stacked layout.
+         Let's disable it for simplicity here or rethink its presentation. */
   }
 
   .sidebar-image {
-      display: none;
-      width: 80%;
-      max-width: none;
+      display: block; /* Show image again if it was hidden */
+      width: 150px; /* A fixed reasonable size */
+      max-width: 40%;
+      margin: 0 auto 15px auto; /* Center it */
   }
   .sidebar-title{
-    display: none;
+    display: block; /* Show titles */
   }
   .sidebar-block {
-      margin: 0 2px 0 0;
+      margin: 0 0 15px 0; /* Space between blocks */
       width: 90%;
+      max-width: 400px; /* Limit width of sidebar content on mobile */
+      margin-left: auto;
+      margin-right: auto;
       justify-content: center;
-      position:sticky;
-      top:0;
+      position:static; /* Remove sticky */
+      top:auto;
   }
 
   .sidebar-block:first-of-type,
   .sidebar-block:last-of-type {
-    display: none;
+    display: block; /* Show all blocks */
   }
 
-  .icon-group{
+  .link-group{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 30px;
-    height: 100px
+    align-items: flex-start; /* Align to start */
+    justify-content: flex-start;
+    margin-top: 10px;
+    height: auto;
   }
-  .sidebar-icon-group {
-    padding: 0;
-    margin: 0;
-    
+
+  .sidebar-icon-link {
+    padding: 5px 0; 
+    margin: 0; 
+    justify-content: flex-start; 
   }
+  
   .icon{
-    margin:0;
-    
+    margin-right:10px; /* Restore margin for text */
   }
 
   .sidebar-icon-text{
-    display: none;
+    display: flex; /* Show text */
   }
 
   .block-experience{
-    margin:0 0 25px 10px; 
+    margin:0 10px 25px 10px; 
     padding:0;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    max-width: 1028px;
-    gap:0px;
+    gap:5px;
   }
 
   .experience-left {
-    display: block;
+    display: flex; /* Revert to flex for date and image if shown */
+    flex-direction: row; /* Date and image side-by-side */
+    align-items: center;
+    gap: 10px;
+    width: 100%; /* Take full width */
   }
   .experience-img{
-    display: none;
+    display: block; /* Show image */
+    width: 40px; /* Control size */
+    height: auto;
+    margin: 0;
   }
 
   .experience-date {
-    margin: 1px 0 0 0;
+    margin: 0;
     padding: 0;
     font-weight: bold;
     color: #203864;
-    max-width:200px;
-}
+    max-width:none; /* Allow it to take space */
+    text-align: left;
+  }
 
   .block-competences {
       flex-direction: column;
@@ -331,19 +622,20 @@ ul {
 
   .competence {
     padding:0px;
-      border-right: none;
-      width: 80%;
+    border-right: none;
+    width: 100%; /* Full width */
   }
   .competence ul {
       padding: 0 0 10px;
       border-bottom: 1px solid #203864;
+      margin-left: 0; /* Align with heading */
   }
   .competence:last-child ul {
     border-bottom: none;
   }
   .competence h4{
-    margin: 10px;
-    text-align: start;
+    margin: 10px 0; /* Adjust margin */
+    text-align: left; /* Align to start */
   }
   .competence li{
     margin-left: 20px;
