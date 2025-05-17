@@ -180,97 +180,134 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Print PDF button logic
         const printButton = document.getElementById('print-pdf-button');
-        if (printButton) {
-            printButton.addEventListener('click', function () {
-                const originalTitle = document.title;
-                document.title = "CV_Mathis_Lafon.pdf"; // File name for the PDF
-                window.print();
-                document.title = originalTitle; // Reset title after print
-            });
-        }
-
-        // Collapsible sections logic
         const contentBlocks = document.querySelectorAll('.content .content-block');
         const isMobileQuery = window.matchMedia("(max-width: 800px)");
-        const toggleHandlers = new Map(); // To store event handlers for proper removal
+        const toggleHandlers = new Map();
+        let originalStatesBeforePrint = new Map(); // To store state of collapsibles
 
         // Function to set the correct max-height for a collapsible body
-        function setCollapsibleHeight(block) {
+        function setCollapsibleHeight(block, forceVisible = false) {
             const body = block.querySelector('.collapsible-body');
             if (!body) return;
 
-            if (block.classList.contains('active') && isMobileQuery.matches) {
-                // Expanding or ensuring expanded height is correct
+            if (forceVisible && isMobileQuery.matches) { // Used for onbeforeprint
+                body.style.transition = 'none'; // Disable transition for immediate effect
                 body.style.maxHeight = body.scrollHeight + 'px';
+                body.style.opacity = '1'; // Ensure visible
+                 // We'll restore transition in onafterprint
+            } else if (block.classList.contains('active') && isMobileQuery.matches) {
+                body.style.transition = ''; // Ensure transition is re-enabled
+                body.style.maxHeight = body.scrollHeight + 'px';
+                body.style.opacity = '1';
             } else if (isMobileQuery.matches) { // Collapsed on mobile
-                 body.style.maxHeight = '0px';
-            }
-            else {
-                // Not on mobile (desktop view)
-                body.style.maxHeight = null; // Remove JS-set max-height, CSS takes over
+                body.style.transition = '';
+                body.style.maxHeight = '0px';
+                body.style.opacity = '0';
+            } else { // Desktop view
+                body.style.transition = '';
+                body.style.maxHeight = null;
+                body.style.opacity = '1';
             }
         }
 
         // Function to handle the toggle action
         function toggleSection(contentBlockElement) {
             contentBlockElement.classList.toggle('active');
-            setCollapsibleHeight(contentBlockElement); // Update height after toggling active class
+            setCollapsibleHeight(contentBlockElement);
         }
 
-        // Initialize collapsibles based on screen size
+        // Initialize collapsibles
         function initializeCollapsibles() {
             const onMobile = isMobileQuery.matches;
-
             contentBlocks.forEach(block => {
                 const title = block.querySelector('.block-title');
                 const body = block.querySelector('.collapsible-body');
 
                 if (title && body) {
-                    // Remove previously attached listener, if any
                     if (toggleHandlers.has(block)) {
                         title.removeEventListener('click', toggleHandlers.get(block));
                         toggleHandlers.delete(block);
                     }
 
                     if (onMobile) {
-                        // On mobile: make them expandable
                         const newHandler = () => toggleSection(block);
                         title.addEventListener('click', newHandler);
-                        toggleHandlers.set(block, newHandler); // Store the handler
-
-                        // Expand by default on initial mobile load or if already active
+                        toggleHandlers.set(block, newHandler);
                         if (!block.classList.contains('active')) {
-                            block.classList.add('active');
+                            block.classList.add('active'); // Default to active on mobile
                         }
-                        // Set height (will be refined on window.load)
                         setCollapsibleHeight(block);
                     } else {
-                        // On desktop: remove 'active' state and ensure it's not collapsible by JS
                         block.classList.remove('active');
-                        setCollapsibleHeight(block); // This will set maxHeight to null
+                        setCollapsibleHeight(block);
                     }
                 }
             });
         }
 
+        // PRINTING LOGIC
+        if (printButton) {
+            printButton.addEventListener('click', function () {
+                const originalTitle = document.title;
+                document.title = "CV_Mathis_Lafon.pdf";
+                window.print(); // onbeforeprint and onafterprint will handle collapsible states
+                document.title = originalTitle;
+            });
+        }
+
+        window.onbeforeprint = function() {
+            if (isMobileQuery.matches) {
+                console.log("Before print on mobile: Expanding collapsibles");
+                originalStatesBeforePrint.clear();
+                contentBlocks.forEach(block => {
+                    const body = block.querySelector('.collapsible-body');
+                    if (body) {
+                        originalStatesBeforePrint.set(block, block.classList.contains('active'));
+                        // Force expand and make visible without animation for print
+                        block.classList.add('active'); // Ensure CSS for active state (like icon) is applied
+                        setCollapsibleHeight(block, true); // true to force visible & no transition
+                    }
+                });
+                // Might need a tiny delay or rAF to ensure DOM updates before print dialog
+                // but CSS @media print rules for max-height: none !important should be strong.
+            }
+        };
+
+        window.onafterprint = function() {
+            if (isMobileQuery.matches) {
+                console.log("After print on mobile: Restoring collapsibles");
+                contentBlocks.forEach(block => {
+                    const body = block.querySelector('.collapsible-body');
+                    if (body && originalStatesBeforePrint.has(block)) {
+                        const wasActive = originalStatesBeforePrint.get(block);
+                        if (wasActive) {
+                            if (!block.classList.contains('active')) block.classList.add('active');
+                        } else {
+                            if (block.classList.contains('active')) block.classList.remove('active');
+                        }
+                        // Restore normal height calculation with transitions
+                        body.style.transition = ''; // Restore transitions
+                        setCollapsibleHeight(block);
+                    }
+                });
+                originalStatesBeforePrint.clear();
+            }
+        };
+
         // Initial setup on DOMContentLoaded
         initializeCollapsibles();
 
-        // On window.load, re-calculate and set maxHeight for all active mobile sections
-        // to ensure it accounts for fully loaded content (like images).
         window.addEventListener('load', () => {
             if (isMobileQuery.matches) {
                 contentBlocks.forEach(block => {
-                    if (block.classList.contains('active')) { // Only for already active blocks
+                    if (block.classList.contains('active')) {
                         setCollapsibleHeight(block);
                     }
                 });
             }
         });
 
-        // Update on resize
         let resizeTimeout;
         isMobileQuery.addEventListener('change', () => {
             clearTimeout(resizeTimeout);
