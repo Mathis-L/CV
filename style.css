@@ -355,7 +355,7 @@ ul {
   body {
     background-color: white;
   }
-  
+
   .main-content-wrapper {
       padding: 0; 
       background: white;
@@ -419,7 +419,6 @@ ul {
       position:static;
       top:auto;
   }
-
 
   .link-group{
     display: flex;
@@ -532,7 +531,6 @@ ul {
     border-bottom: none;
   }
   .competence h4{
-    margin: 10px 0;
     text-align: left;
   }
   .competence li{
