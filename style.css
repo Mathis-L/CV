@@ -7,103 +7,119 @@
 body {
     margin: 0;
     font-family: 'Avenir Light', sans-serif;
-    /* display: flex; /* We'll control display on page-container */
-    font-size: 10pt; /* Base font size for screen, adjust as needed */
-    background-color: #f0f0f0; /* Light grey background for contrast with page */
+    font-size: 10pt;
+    background-color: #f0f0f0;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+.main-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 0;
 }
 
 .download-button-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Put it over all elements */
   text-align: center;
-  padding: 15px;
-  background-color: #203864;
+  padding: 10px 0;
+  background-color: #2c3e50;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
 }
 
-#download-pdf-button {
+#print-pdf-button {
   padding: 10px 20px;
-  font-size: 1em;
   color: white;
-  background-color: #38517e;
+  background-color: #3498db;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-#download-pdf-button:hover {
-  background-color: #2c4471;
+  box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
+#print-pdf-button:hover {
+  background-color: #2980b9;
+  box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+  transform: translateY(-2px);
+}
 
-/* A4 Page Container for screen preview */
+#print-pdf-button:active {
+  background-color: #2471a3;
+  transform: translateY(0px);
+  box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+}
+
 .page-container {
-  width: 210mm; /* A4 width */
-  /* min-height: 297mm; /* A4 height - use min-height to allow content to flow if it's too long on screen */
-  height: 297mm; /* Fixed height for the strict one-page PDF goal */
-  overflow: hidden; /* Important for PDF generation to not show scrollbars if content overflos */
-  margin: 20px auto; /* Center the page on screen */
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  margin: 0 auto;
   background-color: white;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  display: flex; /* This was on body before */
+  display: flex;
   box-sizing: border-box;
 }
   
-/* Styles de la barre latérale */
 .sidebar {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-image: radial-gradient(circle, #203864, #263e6a, #2c4471, #324b77, #38517e);
-  /* width: 30%; Use fixed width for A4 */
-  width: 90mm; /* Approx 30% of 210mm, adjust as needed */
-  height: 100%; /* Fill the page container height */
-  /* min-height: 100vh; /* Not needed with fixed page height */
-  /* max-width: 300px; /* Not needed with fixed mm width */
-  padding-top: 8mm;
-  gap: 10mm; /* Reduced gap */
+  width: 90mm;
+  height: 100%;
+  padding-top: 5mm;
+  gap: 10mm;
   padding-right: 5mm;
   padding-left: 5mm;
   box-sizing: border-box;
   color: white;
 }
 
-/* Styles de l'image de la barre latérale */
 .sidebar-image {
-  width: 60%; 
-  max-width: 40mm; /* Control max size */
+  width: 70%; 
+  max-width: 40mm;
   height: auto; 
   border-radius: 5%;
 }
 
-/* Styles des blocs de la barre latérale */
 .sidebar-block {
-  /* color: white; /* Moved to .sidebar */
-  margin-left: 0; /* Adjusted */
-  margin-right: 0; /* Adjusted */
-  width: 100%; /* Fill sidebar width */
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
 }
 
-/* Styles du titre de la barre latérale */
 .sidebar-title {
   border-bottom: 1px solid white;
-  padding-bottom: 2mm; /* Adjusted padding */
+  padding-bottom: 2mm;
   margin-top:0px;
-  font-size: 1.1em; /* Relative to sidebar font size */
+  font-size: 1.1em;
 }
 
-/* Styles du texte de la barre latérale */
 .sidebar-text {
-  /* max-width: 220px; /* Let it fill available space in sidebar */
-  font-size: 0.85em; /* Slightly smaller for A4 */
+  font-size: 0.85em;
   line-height: 1.4;
 }
-.sidebar-text ul { /* Ensure ul inside sidebar-text also gets smaller font */
-    font-size: 1em; /* Inherit from sidebar-text */
+.sidebar-text ul {
+    font-size: 1em;
 }
 
 .link-group {
   display: flex;
   flex-direction: column;
-  gap: 3mm; /* Espace entre les liens - adjusted */
+  gap: 3mm;
 }
 
 .sidebar-icon-link {
@@ -120,17 +136,17 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
-  font-size: 0.85em; /* Slightly smaller for A4 */
-  word-break: break-all; /* Break long emails/links */
+  font-size: 0.85em;
+  word-break: break-all;
 }
   
 .icon {
   filter: invert(100%);
-  width: 5mm; /* Adjusted size */
+  width: 5mm;
   height: auto; 
-  margin-right: 3mm; /* Adjusted margin */
+  margin-right: 3mm;
   padding: 0;
-  flex-shrink: 0; /* Prevent icon from shrinking */
+  flex-shrink: 0;
 }
 
 .sidebar-icon-link:hover .icon {
@@ -141,16 +157,14 @@ body {
 }
 
 ul {
-  margin: 0 0 0 5mm; /* Adjusted margin */
+  margin: 0 0 0 5mm;
   padding: 0;
   list-style-position: outside;
 }
-.sidebar ul { /* Specific for sidebar lists */
+.sidebar ul {
   margin-left: 6mm;
 }
 
-
-/* Contenu principal */
 .content {
   flex-grow: 1;
   display: flex;
@@ -159,44 +173,41 @@ ul {
   align-items: flex-start;
   gap:5mm;
   box-sizing: border-box;
-  height: 100%; /* Fill the page container height */
-  overflow-y: auto; /* Allow scrolling for screen if content is too long for fixed height */
+  height: 100%;
 }
 
-/* En-tête */
 .header {
-  margin-top: 0; /* Adjusted */
+  margin-top: 0;
   align-self: center; 
 }
 .header-h1 {
   color: #203864;
-  font-size: 18pt; /* Adjusted size */
-  margin-bottom: 1mm; /* Adjusted margin */
+  font-size: 18pt;
+  margin-bottom: 1mm;
   text-align: center;
 }
 .header-h2 {
-  /* margin-left: 10px; */
   margin-top: 0px;
-  font-size: 14pt; /* Adjusted size */
+  font-size: 14pt;
   text-align: center;
-  color: #333; /* Darker than default for better contrast */
+  color: #333;
 }
   
 .content-block{
   width:100%;
-  margin-bottom: 4mm; /* Adjusted margin */
+  margin-bottom: 4mm;
 }
 .content-block:last-child {
-    margin-bottom: 0; /* No margin for the last block */
+    margin-bottom: 0;
 }
 
 .block-title{
   border-bottom: 1px solid #203864;
   color: #203864;
-  padding-left: 2mm; /* No specific padding, handled by .content padding */
-  padding-bottom: 2mm; /* Adjusted padding */
-  margin: 0 0 3mm 0; /* Adjusted margin */
-  font-size: 1.2em; /* Relative to content font size */
+  padding-left: 2mm;
+  padding-bottom: 2mm;
+  margin: 0 0 3mm 0;
+  font-size: 1.2em;
 }
 
 .block-experience{
@@ -205,13 +216,12 @@ ul {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  /* max-width: 1028px; */
-  gap:3mm; /* Adjusted gap */
+  gap:3mm;
 }
 .block-experience ul {
   list-style-type: circle;
-  margin: 1mm 0 0 5mm; /* Adjusted margin */
-  font-size: 0.9em; /* Slightly smaller for lists */
+  margin: 1mm 0 0 5mm;
+  font-size: 0.9em;
   line-height: 1.4;
 }
 .block-experience li::marker{
@@ -224,10 +234,10 @@ ul {
 .experience-left {
   display: flex;
   flex-direction: column;
-  gap: 2mm; /* Adjusted gap */
+  gap: 2mm;
   align-items: center;
-  flex-shrink: 0; /* Prevent shrinking */
-  width: 16mm; /* Give it a fixed width to align text */
+  flex-shrink: 0;
+  width: 16mm;
 }
 .experience-img{
   margin: 2mm; 
@@ -246,21 +256,20 @@ ul {
   margin: 0;
   padding: 0;
   font-size: 1em;
-  font-weight: bold; /* Make titles stand out a bit more */
+  font-weight: bold;
 }
 .experience-lieu{
   margin: 0 0 2mm 1mm;
   padding: 0;
-  font-size: 0.8em; /* Slightly smaller */
+  font-size: 0.8em;
   font-style: italic;
 }
 
 .formation-lieu{
-  margin: 1mm 0 0 1mm; /* Adjusted margin */
+  margin: 1mm 0 0 1mm;
   padding: 0;
-  font-size: 0.9em; /* Consistent with experience lists */
+  font-size: 0.9em;
 }
-
 
 .block-competences{
   display: flex;
@@ -271,21 +280,19 @@ ul {
 }
 .competence{
   margin:0px ;
-  padding: 0; /* No specific padding */
-  /* border-right: 1px solid #203864; /* Will be removed for last-child */
+  padding: 0;
   white-space:nowrap;
-  flex: 1; /* Allow them to share space */
+  flex: 1;
 }
 .competence:not(:last-child) {
-  padding-right: 3mm; /* Space before border */
+  padding-right: 3mm;
   border-right: 1px solid #203864;
 }
 
-
 .competence h4{
-  margin: 0 0 2mm 0; /* Adjusted margin */
+  margin: 0 0 2mm 0;
   text-align: center;
-  font-size: 1em; /* Consistent title size */
+  font-size: 1em;
   color: #203864;
 }
 .competence ul {
@@ -298,186 +305,40 @@ ul {
 }
 
 @media print {
-  html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 9pt; 
-    background-color: white !important; /* NOUVEAU: S'assurer que le fond est blanc */
-    color: black !important; /* NOUVEAU: S'assurer que le texte est noir */
-    -webkit-print-color-adjust: exact !important; 
-    print-color-adjust: exact !important; 
-    line-height: 1.15; /* AJUSTÉ: Légèrement réduit pour gagner de la place partout */
+  @page {
+    size: A4 portrait;
+    margin: 0mm;
   }
 
+  html, body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 !important;
+    padding: 0 !important; 
+    background-color: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .main-content-wrapper {
+    padding: 0 !important;
+  }
   .download-button-container {
     display: none !important; 
   }
 
   .page-container {
-    width: 210mm; /* NOUVEAU: Forcer la largeur A4 exacte */
-    height: 297mm; /* NOUVEAU: Forcer la hauteur A4 exacte */
-    margin: 0 !important; 
-    padding: 0 !important; /* NOUVEAU: Pas de padding sur le conteneur racine pour PDF */
-    box-shadow: none !important; /* NOUVEAU */
-    overflow: hidden !important; /* NOUVEAU et CRUCIAL */
-    display: flex !important; /* NOUVEAU: S'assurer que display flex est appliqué */
+    width: 210mm;
+    height: 297mm;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    display: flex !important;
+    box-sizing: border-box;
   }
 
-  .sidebar {
-    width: 63mm; /* AJUSTÉ: Un peu plus que 60mm pour donner de l'air, mais moins que 90mm */
-    height: 100%; /* NOUVEAU: Doit remplir page-container */
-    padding: 6mm 5mm 5mm 5mm; /* AJUSTÉ: Padding interne pour la marge visuelle. Top un peu plus grand. */
-    gap: 5px; /* AJUSTÉ: Réduit significativement */
-    box-sizing: border-box; /* NOUVEAU: S'assurer que padding est inclus dans width/height */
-    display: flex; /* NOUVEAU: S'assurer que c'est flex pour que gap fonctionne */
-    flex-direction: column; /* NOUVEAU */
-    align-items: center; /* NOUVEAU */
-  }
-  .sidebar-image {
-    max-width: 35mm;
-    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
-    margin-bottom: 2mm; /* AJUSTÉ */
-    border-radius: 5%; /* NOUVEAU: Garder un peu de style */
-  }
-  .sidebar-block {
-      width: 100%; /* NOUVEAU */
-      margin-bottom: 2mm; /* NOUVEAU: Un peu d'espace entre blocs sidebar si nécessaire, mais gap devrait le gérer */
-  }
-  .sidebar-block:last-child {
-      margin-bottom: 0; /* NOUVEAU */
-  }
-  .sidebar-title {
-    font-size: 1.0em; /* AJUSTÉ */
-    padding-bottom: 1mm; /* AJUSTÉ */
-    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
-    margin-bottom: 1.5mm; /* NOUVEAU */
-  }
-  .sidebar-text {
-    font-size: 7.8pt; /* AJUSTÉ: encore un peu plus petit */
-    line-height: 1.25; /* AJUSTÉ */
-    margin-top: 0;
-    margin-bottom: 1mm; 
-  }
-   .sidebar-text ul {
-    font-size: 1em; 
-    margin-top: 0.5mm;
-    margin-left: 4mm; /* AJUSTÉ */
-    padding-left: 0; /* NOUVEAU */
-  }
-  .sidebar-icon-text {
-    font-size: 7.8pt; /* AJUSTÉ */
-  }
-  .link-group {
-    gap: 1.5mm; /* AJUSTÉ */
-  }
-  .icon {
-    width: 3.5mm; /* AJUSTÉ */
-    margin-right: 1.5mm; /* AJUSTÉ */
-  }
-
-  .content {
-    flex-grow: 1; /* NOUVEAU */
-    height: 100%; /* NOUVEAU: Doit remplir page-container */
-    padding: 6mm 7mm 5mm 7mm; /* AJUSTÉ: Padding interne pour marges. Top un peu plus grand. */
-    overflow: hidden; /* NOUVEAU et CRUCIAL pour le contenu interne */
-    gap: 2mm; /* AJUSTÉ: Réduire le gap global */
-    box-sizing: border-box; /* NOUVEAU */
-    display: flex; /* NOUVEAU */
-    flex-direction: column; /* NOUVEAU */
-  }
-
-  .header {
-    margin-top: 0 !important; 
-    padding-top: 0 !important;
-    margin-bottom: 1.5mm; /* AJUSTÉ: Moins d'espace sous l'en-tête global */
-    align-self: center; /* NOUVEAU */
-  }
-  .header-h1 {
-    font-size: 15pt; /* AJUSTÉ */
-    margin-top: 0 !important; 
-    margin-bottom: 0mm !important; /* AJUSTÉ */
-  }
-  .header-h2 {
-    font-size: 12pt; /* AJUSTÉ */
-    margin-top: 0.5mm !important; /* AJUSTÉ: Un peu d'espace après H1 */
-    margin-bottom: 0 !important;
-  }
-  
-  .content-block {
-    width: 100%; /* NOUVEAU */
-    margin-bottom: 2mm; /* AJUSTÉ */
-  }
-  .content-block:last-child {
-      margin-bottom: 0; /* NOUVEAU: Pas de marge pour le dernier bloc de contenu */
-  }
-
-  .block-title {
-    font-size: 1.05em; /* AJUSTÉ */
-    padding-bottom: 0.8mm; /* AJUSTÉ */
-    margin-bottom: 1.2mm; /* AJUSTÉ */
-    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
-  }
-
-  .block-experience {
-    margin-bottom: 2mm; /* AJUSTÉ */
-    gap: 1.5mm; 
-    margin-left: 0; /* NOUVEAU */
-    margin-right: 0; /* NOUVEAU */
-  }
-  .block-experience:last-child {
-      margin-bottom: 0; /* NOUVEAU */
-  }
-  .experience-left {
-      width: 15mm; /* AJUSTÉ */
-      gap: 1.5mm; /* AJUSTÉ */
-  }
-  .experience-img {
-    max-width: 11mm; /* AJUSTÉ */
-    margin: 1mm 0; /* AJUSTÉ */
-  }
-  .block-experience ul {
-    font-size: 0.82em; /* AJUSTÉ */
-    line-height: 1.2; /* AJUSTÉ */
-    margin-top: 0.5mm; /* AJUSTÉ */
-    margin-bottom: 0; /* NOUVEAU */
-    padding-left: 3.5mm; /* AJUSTÉ */
-  }
-  .experience-date {
-    font-size: 0.78em; /* AJUSTÉ */
-  }
-  .experience-titre {
-    font-size: 0.92em; /* AJUSTÉ */
-    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
-    margin-bottom: 0.3mm; /* AJUSTÉ */
-  }
-  .experience-lieu {
-    font-size: 0.72em; /* AJUSTÉ */
-    margin-bottom: 0.5mm; /* AJUSTÉ */
-    margin-top: 0;
-  }
-  .formation-lieu {
-    font-size: 0.82em; /* AJUSTÉ */
-    margin-top: 0.3mm; /* AJUSTÉ */
-  }
-
-  .block-competences {
-    margin-top: 0.5mm; /* AJUSTÉ */
-    margin-left: 0; /* NOUVEAU */
-    gap: 2mm; /* AJUSTÉ */
-  }
-  .competence h4 {
-    font-size: 0.92em; /* AJUSTÉ */
-    margin-bottom: 0.8mm; /* AJUSTÉ */
-    margin-top: 0 !important; /* NOUVEAU et CRUCIAL */
-  }
-  .competence ul {
-    font-size: 0.82em; /* AJUSTÉ */
-    line-height: 1.2; /* AJUSTÉ */
-    margin-top: 0;
-    padding-left: 3.5mm; /* AJUSTÉ */
-  }
-
-  /* Try to prevent page breaks (gardé de votre code, c'est bien) */
   .sidebar-block, .content-block, .block-experience, .competence {
     page-break-inside: avoid;
   }
@@ -490,29 +351,34 @@ ul {
   }
 }
 
-/* Responsive styles for smaller screens */
-@media (max-width: 800px) {
+@media screen and (max-width: 800px) {
+  body {
+    background-color: white;
+  }
+  
+  .main-content-wrapper {
+      padding: 0; 
+      background: white;
+  }
+
   .page-container {
     width: 100%;
-    min-height: 0; /* Allow it to be as tall as content */
+    min-height: 0;
     height: auto;
     margin: 0;
-    flex-direction: column; /* Stack sidebar and content */
+    flex-direction: column;
+    box-shadow: none;
   }
 
   .content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    overflow-y: visible; /* Let content determine height */
+    overflow-y: visible;
+    gap:10mm;
+    margin-bottom: 60px;
   }
   
-  .header {
-    margin-top: 20px;
-    margin-left: auto; 
-    margin-right: auto; 
-    align-self: auto;
+  .header { 
+    align-self: center;
+    margin-bottom: 15px
   }
   
   .header-h1 {
@@ -521,52 +387,44 @@ ul {
   }
   
   .header-h2 {
-    margin-left: 10px;
     margin-top: 0px;
     font-size: x-large;
     margin-bottom:0px;
   }
+
+  .phone-hide{
+    display: none;
+  }
+
   .sidebar {
-      width: 100%; /* Full width when stacked */
+     display: flex;
+      width: 100%;
       min-width: 0;
-      height: auto; /* Auto height */
-      padding:15px;
-      /* The sticky behavior for contact might be tricky in this stacked layout.
-         Let's disable it for simplicity here or rethink its presentation. */
+      height: auto;
+      gap: 0mm;
   }
 
   .sidebar-image {
-      display: block; /* Show image again if it was hidden */
-      width: 150px; /* A fixed reasonable size */
+      display: block;
+      width: 150px;
       max-width: 40%;
-      margin: 0 auto 15px auto; /* Center it */
   }
-  .sidebar-title{
-    display: block; /* Show titles */
-  }
+
   .sidebar-block {
-      margin: 0 0 15px 0; /* Space between blocks */
       width: 90%;
-      max-width: 400px; /* Limit width of sidebar content on mobile */
+      max-width: 400px;
       margin-left: auto;
       margin-right: auto;
       justify-content: center;
-      position:static; /* Remove sticky */
+      position:static;
       top:auto;
   }
 
-  .sidebar-block:first-of-type,
-  .sidebar-block:last-of-type {
-    display: block; /* Show all blocks */
-  }
 
   .link-group{
     display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align to start */
-    justify-content: flex-start;
-    margin-top: 10px;
-    height: auto;
+    flex-direction: row;
+    margin: 10px 0;
   }
 
   .sidebar-icon-link {
@@ -576,32 +434,72 @@ ul {
   }
   
   .icon{
-    margin-right:10px; /* Restore margin for text */
+    width:7mm;
+    margin-right: 0mm;
   }
 
-  .sidebar-icon-text{
-    display: flex; /* Show text */
+  .content-block .block-title {
+    cursor: pointer;
+    position: relative;
+    padding-right: 35px; 
+    display: block; 
+    padding-left: 10px; 
+    margin-left: 0;
+    margin-right: 0;
   }
-
+  
+  .content-block .block-title::after {
+    content: '+';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #203864;
+    transition: transform 0.3s ease-out;
+  }
+  
+  .content-block.active .block-title::after {
+    content: '−';
+  }
+  
+  .content-block .collapsible-body {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease-out, 
+                opacity 0.3s ease-out, 
+                padding-top 0.4s ease-out, 
+                padding-bottom 0.4s ease-out;
+    box-sizing: border-box;
+    padding: 0 10px;
+  }
+  
+  .content-block.active .collapsible-body {
+    opacity: 1;
+    padding-top: 10px;    
+    padding-bottom: 15px;   
+  }
+  
   .block-experience{
-    margin:0 10px 25px 10px; 
+    margin:0 10px 30px 10px; 
     padding:0;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap:5px;
+    gap:0px;
   }
 
   .experience-left {
-    display: flex; /* Revert to flex for date and image if shown */
-    flex-direction: row; /* Date and image side-by-side */
+    display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 10px;
-    width: 100%; /* Take full width */
+    width: 100%;
   }
   .experience-img{
-    display: block; /* Show image */
-    width: 40px; /* Control size */
+    display: block;
+    width: 40px;
     height: auto;
     margin: 0;
   }
@@ -611,7 +509,7 @@ ul {
     padding: 0;
     font-weight: bold;
     color: #203864;
-    max-width:none; /* Allow it to take space */
+    max-width:none;
     text-align: left;
   }
 
@@ -622,20 +520,20 @@ ul {
 
   .competence {
     padding:0px;
-    border-right: none;
-    width: 100%; /* Full width */
+    border-right: none !important;
+    width: 100%;
   }
   .competence ul {
-      padding: 0 0 10px;
+      padding: 0 0 10px 10px;
       border-bottom: 1px solid #203864;
-      margin-left: 0; /* Align with heading */
+      margin-left: 0;
   }
   .competence:last-child ul {
     border-bottom: none;
   }
   .competence h4{
-    margin: 10px 0; /* Adjust margin */
-    text-align: left; /* Align to start */
+    margin: 10px 0;
+    text-align: left;
   }
   .competence li{
     margin-left: 20px;
