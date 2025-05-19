@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mathis L - CV</title>
   <link rel="icon" href="res/cv.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,7 +21,6 @@
             <p class="sidebar-text">
                 Avec une expérience variée allant de l'embarqué à l’intelligence artificielle, je suis curieux et toujours prêt à relever de nouveaux défis. Je cherche à mettre mes connaissances au service de projets innovants et à m'investir dans un environnement collaboratif et stimulant.
             </p>
-            <p class="sidebar-text phone-hide">Français / Permis B</p>
         </div>
         <div class="sidebar-block">
             <h2 class="sidebar-title phone-hide">CONTACT</h2>
@@ -37,16 +39,41 @@
                 </a>
             </div>
         </div>
+        <div class="sidebar-block phone-hide" id="sidebar-competences-desktop">
+            <h2 class="sidebar-title">COMPÉTENCES</h2>
+            <div class="sidebar-text">
+                <h4 class="sidebar-competence-subtitle">Langages</h4>
+                <ul>
+                    <li>C / C++</li>
+                    <li>Python</li>
+                    <li>JavaScript</li>
+                    <li>HTML / CSS</li>
+                </ul>
+                <h4 class="sidebar-competence-subtitle">Logiciels</h4>
+                <ul>
+                    <li>Visual Studio Code</li>
+                    <li>Git</li>
+                    <li>STM32CubeIDE</li>
+                    <li>CARLA</li>
+                    <li>Android Studio</li>
+                </ul>
+                <h4 class="sidebar-competence-subtitle">Langues</h4>
+                <ul>
+                    <li>Français - Langue natale</li>
+                    <li>Anglais - C1</li>
+                </ul>
+            </div>
+        </div>
         <div class="sidebar-block phone-hide">
             <h2 class="sidebar-title">INTÉRÊTS</h2>
-            <p class="sidebar-text">
+            <div class="sidebar-text">
                 <ul>
                     <li>Gymnastique en compétition régionale – 13 ans</li>
                     <li>Callisthénie</li>
                     <li>Natation</li>
                     <li>Ski</li>
                 </ul>
-            </p>
+            </div>
         </div>
       </div>
       <div class="content">
@@ -55,7 +82,7 @@
             <h2 class="header-h2">Ingénieur Logiciel</h2>
         </div>
         <div class="content-block">
-            <h2 class="block-title">EXPÉRIENCES</h2>
+            <h2 class="block-title">EXPÉRIENCES PROFESSIONNELLES</h2>
             <div class="collapsible-body">
                 <div class="block-experience">
                     <div  class="experience-left">
@@ -91,7 +118,7 @@
                 <div class="block-experience">
                     <div  class="experience-left">
                         <p class="experience-date">juill. 2021 – août 2021</p>
-                        <img src="res/kiomda.png" alt="Kiomda Logo" class="experience-img" width="40" height="auto">
+                        <img src="res/kiomda.png" alt="Kiomda Logo" class="experience-img" width="30" height="auto">
                     </div>
                     <div>
                         <h3 class="experience-titre">Kiomda – Stage technicien</h3>
@@ -103,7 +130,41 @@
                 </div>
             </div>
         </div>
+        
         <div class="content-block">
+            <h2 class="block-title">BÉNÉVOLAT & PROJETS PERSONNELS (2023-2025)</h2>
+            <div class="collapsible-body">
+                <div class="block-experience">
+                    <div  class="experience-left">
+                        <p class="experience-date">fév. 2025 – présent</p>
+                        <img src="res/roseau.jpg" alt="Le Roseau Logo" class="experience-img" width="35" height="auto">
+                    </div>
+                    <div>
+                        <h3 class="experience-titre">Association Le Roseau – Bénévole en support informatique</h3>
+                        <p></p>
+                        <ul>
+                            <li><b>Conception</b> et <b>animation</b> d’ateliers sur les outils numériques, dont l’intelligence artificielle</li>
+                            <li>Accompagnement de publics débutants renforçant mes aptitudes en <b>pédagogie</b>, <b>vulgarisation</b>, écoute active et adaptation</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="block-experience">
+                    <div  class="experience-left">
+                        <p class="experience-date">oct. 2023 – présent</p>
+                    </div>
+                    <div>
+                        <h3 class="experience-titre">Projets Personnels (Apprentissage Continu)</h3>
+                         <p class="experience-lieu">Voir mon <a href="https://github.com/Mathis-L" target="_blank" class="link">Github</a></p>
+                        <ul>
+                            <li><b>Développement Logiciel & Web :</b> Création d'applications web full-stack (SaaS de journaling et de gestion de tâches, <a href="https://github.com/Mathis-L/CallOut" target="_blank" class="link">Jeu Multijoueur en temps réel</a>), outils d'automatisation (Bots Python), et divers mini-projets techniques (C++, Python, JavaScript, HTML, CSS, Qt).</li>
+                            <li><b>Intelligence Artificielle & Analyse de Données :</b> Développement de modèles IA (Bot Snake avec A*/BFS, Bot Dofus avec YOLOv5), outils de scraping et analyse de sentiment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block phone-only">
             <h2 class="block-title">COMPÉTENCES</h2>
             <div class="collapsible-body">
                 <div class="block-competences">
@@ -258,7 +319,6 @@
 
         window.onbeforeprint = function() {
             if (isMobileQuery.matches) {
-                console.log("Before print on mobile: Expanding collapsibles");
                 originalStatesBeforePrint.clear();
                 contentBlocks.forEach(block => {
                     const body = block.querySelector('.collapsible-body');
@@ -276,7 +336,6 @@
 
         window.onafterprint = function() {
             if (isMobileQuery.matches) {
-                console.log("After print on mobile: Restoring collapsibles");
                 contentBlocks.forEach(block => {
                     const body = block.querySelector('.collapsible-body');
                     if (body && originalStatesBeforePrint.has(block)) {
