@@ -76,7 +76,7 @@ body {
   width: 120mm;
   height: 100%;
   padding-top: 5mm;
-  gap: 10mm;
+  gap: 7mm;
   padding-right: 5mm;
   padding-left: 5mm;
   box-sizing: border-box;
@@ -98,14 +98,16 @@ body {
 
 .sidebar-title {
   border-bottom: 1px solid white;
-  padding-bottom: 2mm;
+  padding-bottom: 1mm;
   margin-top:0px;
   font-size: 1.1em;
+  margin-bottom: 2mm;
 }
 
 .sidebar-text {
   font-size: 0.9em; 
   line-height: 1.4;
+  margin:0;
 }
 .sidebar-text ul {
     font-size: 1em;
@@ -116,13 +118,12 @@ body {
   font-size: 1.05em; 
   color: white; 
   margin-top: 10px; 
-  margin-bottom: 5px; 
+  margin-bottom: 2px; 
 }
 
 #sidebar-competences-desktop .sidebar-text .sidebar-competence-subtitle:first-of-type {
   margin-top: 0; 
 }
-
 
 #sidebar-competences-desktop .sidebar-text ul {
   margin-left: 6mm; 
@@ -177,7 +178,7 @@ body {
 ul {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0.5mm;
   margin: 0 0 0 5mm;
   padding: 0;
   list-style-position: outside;
@@ -185,7 +186,7 @@ ul {
   line-height: 1.4;
 }
 .sidebar ul {
-  margin-left: 6mm;
+  margin-left: 4mm;
 }
 
 .content {
