@@ -238,7 +238,7 @@ ul {
   padding:0;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: baseline;
   gap:2mm;
 }
 .block-experience ul {
